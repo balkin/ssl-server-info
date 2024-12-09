@@ -34,6 +34,7 @@ func parsePathParams(path string, query url.Values) map[string]string {
 
 func SslJsonHandler(w http.ResponseWriter, r *http.Request) {
 	w.Header().Add("Server", "ssl-server-info; https://github.com/balkin/ssl-server-info")
+	w.Header().Add("Content-Type", "application/json")
 
 	if r.TLS == nil {
 		http.Error(w, "Forbidden", http.StatusForbidden)
@@ -87,7 +88,6 @@ func SslJsonHandler(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	w.Header().Set("Content-Type", "application/json")
 	if err := json.NewEncoder(w).Encode(response); err != nil {
 		http.Error(w, err.Error(), http.StatusInternalServerError)
 	}
