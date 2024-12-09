@@ -2,7 +2,6 @@ package main
 
 import (
 	"encoding/json"
-	"log"
 	"net/http"
 	"net/url"
 	"strconv"
@@ -83,8 +82,7 @@ func SslJsonHandler(w http.ResponseWriter, r *http.Request) {
 		w.WriteHeader(statusCode)
 	} else {
 		response.Message = "No mTLS certificate provided"
-		log.Println("No peer certificates, returning 403")
-		http.Error(w, "", http.StatusForbidden)
+		w.WriteHeader(http.StatusForbidden)
 		return
 	}
 
